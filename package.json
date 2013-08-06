@@ -1,0 +1,21 @@
+{
+    "author": "Kuno Woudt <kuno@frob.nl>",
+    "dependencies": {
+        "jsonld": "0.0.x",
+        "n3": "~0.1.3"
+    },
+    "devDependencies": {
+        "mocha": "1.12.x"
+    },
+    "description": "Turtle to JSON-LD conversion.",
+    "engines": {
+        "node": ">=0.8"
+    },
+    "scripts": {
+        "test": "node_modules/mocha/bin/mocha --ui tdd --reporter spec"
+    },
+    "repository": "https://github.com/warpr/turtle-to-jsonld/",
+    "license": "copyleft-next 0.3.0",
+    "name": "turtle-to-jsonld",
+    "version": "0.0.1"
+}
