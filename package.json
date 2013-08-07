@@ -14,7 +14,13 @@
     "scripts": {
         "test": "node_modules/mocha/bin/mocha --ui tdd --reporter spec"
     },
-    "repository": "https://github.com/warpr/turtle-to-jsonld/",
+    "bin": {
+        "turtle-to-jsonld": "./bin/turtle-to-jsonld",
+    },
+    "repository": {
+        "type": "git",
+        "https://github.com/warpr/turtle-to-jsonld/"
+    },
     "license": "copyleft-next 0.3.0",
     "name": "turtle-to-jsonld",
     "version": "0.0.1"
