@@ -1,7 +1,7 @@
 {
     "author": "Kuno Woudt <kuno@frob.nl>",
     "dependencies": {
-        "jsonld": "0.0.x",
+        "jsonld": "git://github.com/digitalbazaar/jsonld.js.git",
         "n3": "~0.1.3"
     },
     "devDependencies": {
@@ -17,5 +17,5 @@
     "repository": "https://github.com/warpr/turtle-to-jsonld/",
     "license": "copyleft-next 0.3.0",
     "name": "turtle-to-jsonld",
-    "version": "0.0.1"
+    "version": "0.0.2"
 }

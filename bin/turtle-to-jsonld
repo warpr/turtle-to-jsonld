@@ -10,7 +10,8 @@ LICENSE.txt for more information.
 */
 
 var fs = require ('fs');
-var parser = require ('../lib/turtle-to-jsonld');
+var jsonld = require ('jsonld');
+var ttl = require ('../lib/turtle-to-jsonld');
 
 function help ()
 {
@@ -24,17 +25,23 @@ function help ()
 function main (filename)
 {
     fs.readFile(filename, "utf-8", function (err, data) {
-        parser.compactFromTurtle (data, function (err, result) {
-            if (err)
-            {
-                console.error ("ERROR:", err);
+
+        parser = ttl.registerWith (jsonld);
+
+        jsonld.fromRDF (data, { format: 'text/turtle' }, function (err, dataset) {
+            if (err) {
+                console.error ("ERROR: ", err);
                 process.exit(1);
             }
             else
             {
-                console.log (JSON.stringify (result, null, "    "));
+                var context = parser.context;
+                jsonld.compact (dataset, context, { optimize: true }, function (err, compacted) {
+                    console.log (JSON.stringify (compacted, null, "    "));
+                });
             }
         });
+
     });
 };
 
