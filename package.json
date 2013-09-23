@@ -17,5 +17,5 @@
     "repository": "https://github.com/warpr/turtle-to-jsonld/",
     "license": "copyleft-next 0.3.0",
     "name": "turtle-to-jsonld",
-    "version": "0.0.2"
+    "version": "0.0.3"
 }
