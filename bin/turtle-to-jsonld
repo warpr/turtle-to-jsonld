@@ -13,17 +13,6 @@ var fs = require ('fs');
 var jsonld = require ('jsonld');
 var ttl = require ('../lib/turtle-to-jsonld');
 
-var evil_global_context = null;
-
-jsonld.registerRDFParser('text/turtle', function (input, callback) {
-
-    ttl.fromTurtle (input, callback, function (err, context) {
-        evil_global_context = context;
-    });
-
-});
-
-
 function help ()
 {
     console.log ("turtle-to-jsonld");
@@ -37,6 +26,8 @@ function main (filename)
 {
     fs.readFile(filename, "utf-8", function (err, data) {
 
+        parser = ttl.registerWith (jsonld);
+
         jsonld.fromRDF (data, { format: 'text/turtle' }, function (err, dataset) {
             if (err) {
                 console.error ("ERROR: ", err);
@@ -44,7 +35,7 @@ function main (filename)
             }
             else
             {
-                var context = evil_global_context;
+                var context = parser.context;
                 jsonld.compact (dataset, context, { optimize: true }, function (err, compacted) {
                     console.log (JSON.stringify (compacted, null, "    "));
                 });
