@@ -23,7 +23,7 @@ function help ()
 
 function main (filename)
 {
-    fs.readFile("AGPL-1.turtle", "utf-8", function (err, data) {
+    fs.readFile(filename, "utf-8", function (err, data) {
         parser.compactFromTurtle (data, function (err, result) {
             if (err)
             {
