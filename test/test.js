@@ -11,6 +11,15 @@ LICENSE.txt for more information.
 var parser = require('../lib/turtle-to-jsonld.js');
 var assert = require('assert');
 
+var graph_to_hash = function (graph) {
+    var ret = {};
+    for (var idx in graph) {
+        var item = graph[idx];
+        ret[item['@id']] = item;
+    };
+    return ret;
+};
+
 suite ('Parser', function () {
     suite ('Term', function () {
 
@@ -89,15 +98,6 @@ suite ('Parser', function () {
                 'test:farruko foaf:familyName "Reyes Rosado" .'
             ].join ("\n");
 
-            var graph_to_hash = function (graph) {
-                var ret = {};
-                for (var idx in graph) {
-                    var item = graph[idx];
-                    ret[item['@id']] = item;
-                };
-                return ret;
-            };
-
             parser.compactFromTurtle (input, function (err, result) {
                 assert.equal (err, null);
 
@@ -116,6 +116,43 @@ suite ('Parser', function () {
                 assert.deepEqual (graph['test:titerito'], {
                     '@id': 'test:titerito',
                     'foaf:maker': { '@id': 'test:farruko' }
+                });
+
+                done ();
+            });
+
+        });
+
+        test ('native datatypes', function (done) {
+
+            var input = [
+                '@prefix ex: <https://example.com/> .',
+                '@prefix hydra: <http://purl.org/hydra/core#> .',
+                '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .',
+                '',
+                'ex:statusOK hydra:statusCode "200"^^xsd:integer .',
+                'ex:statusNotFound hydra:statusCode 404 .',
+                'ex:prop hydra:readonly true .',
+                'ex:prop hydra:writeonly "true"^^xsd:boolean .'
+            ].join ("\n");
+
+            parser.compactFromTurtle (input, function (err, result) {
+                assert.equal (err, null);
+
+                var graph = graph_to_hash (result['@graph']);
+
+                assert.deepEqual (graph['ex:statusOK'], {
+                    '@id': 'ex:statusOK', 'hydra:statusCode': 200,
+                });
+
+                assert.deepEqual (graph['ex:statusNotFound'], {
+                    '@id': 'ex:statusNotFound', 'hydra:statusCode': 404,
+                });
+
+                assert.deepEqual (graph['ex:prop'], {
+                    '@id': 'ex:prop',
+                    'hydra:readonly': true,
+                    'hydra:writeonly': true,
                 });
 
                 done ();
