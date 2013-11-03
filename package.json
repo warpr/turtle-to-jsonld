@@ -5,7 +5,8 @@
         "n3": "~0.1.3"
     },
     "devDependencies": {
-        "mocha": "1.12.x"
+        "mocha": "1.12.x",
+        "jshint": "2.3.0"
     },
     "description": "Turtle to JSON-LD conversion.",
     "engines": {
@@ -13,10 +14,13 @@
     },
     "main": "lib/turtle-to-jsonld.js",
     "scripts": {
-        "test": "node_modules/mocha/bin/mocha --ui tdd --reporter spec"
+        "test": "bin/.test"
     },
     "bin": {
         "turtle-to-jsonld": "./bin/turtle-to-jsonld"
+    },
+    "jshintConfig": {
+        "node": true
     },
     "repository": {
         "type": "git",

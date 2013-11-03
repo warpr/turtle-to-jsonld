@@ -1,0 +1,15 @@
+#!/bin/bash
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+cd "$DIR/.."
+
+JSHINT="node_modules/jshint/bin/jshint lib/turtle-to-jsonld.js"
+MOCHA="node_modules/mocha/bin/mocha --ui tdd --reporter spec"
+
+$JSHINT && $MOCHA
+
+
+
