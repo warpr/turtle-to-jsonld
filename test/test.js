@@ -1,3 +1,4 @@
+"use strict";
 /* -*- mode: Javascript -*-
 
 turtle-to-jsonld
