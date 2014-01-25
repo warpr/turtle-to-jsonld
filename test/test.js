@@ -160,5 +160,27 @@ suite ('Parser', function () {
             });
 
         });
+
+        test ('triple quoted literal', function (done) {
+
+            var input = [
+                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .',
+                '',
+                '<> rdfs:comment """',
+                'This is a multiline comment.',
+                '"""@en .'
+            ].join ("\n");
+
+            parser.compactFromTurtle (input, function (err, result) {
+                assert.equal (err, null);
+
+                assert.equal (result['rdfs:comment']['@language'], 'en');
+                assert.equal (result['rdfs:comment']['@value'],
+                             "\nThis is a multiline comment.\n");
+
+                done ();
+            });
+
+        });
     });
 });
