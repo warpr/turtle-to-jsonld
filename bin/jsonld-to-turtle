@@ -11,7 +11,7 @@ LICENSE.txt for more information.
 
 var fs = require ('fs');
 var jsonld = require ('jsonld');
-var jsonld_to_turtle = require ('../lib/jsonld-to-turtle');
+var jsonld_to_turtle = require ('../lib/turtle-to-jsonld');
 
 function help ()
 {
