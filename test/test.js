@@ -183,4 +183,33 @@ suite ('Parser', function () {
 
         });
     });
+
+    suite ('JSON-LD to Turtle', function () {
+
+        test ('no graph', function (done) {
+
+            var input = JSON.stringify({
+                "@context": { "dc": "http://purl.org/dc/terms/" },
+                "@id": "https://example.com/titerito",
+                "dc:title": {
+                    "@language": "es",
+                    "@value": "Titerito"
+                }
+            }, null, "    ");
+
+            parser.fromJsonld (input, function (err, result) {
+                assert.equal (err, null);
+
+                var expected = [
+                    '@prefix dc: <http://purl.org/dc/terms/>.',
+                    '',
+                    '<https://example.com/titerito> dc:title "Titerito"@es.',
+                    ''
+                ].join ("\n");
+
+                assert.equal (result, expected);
+                done ();
+            });
+        });
+    });
 });

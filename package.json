@@ -1,8 +1,8 @@
 {
     "author": "Kuno Woudt <kuno@frob.nl>",
     "dependencies": {
-        "jsonld": "git://github.com/digitalbazaar/jsonld.js.git",
-        "n3": "~0.1.3"
+        "n3": "^0.2.5",
+        "jsonld": "^0.2.6"
     },
     "devDependencies": {
         "mocha": "1.12.x",

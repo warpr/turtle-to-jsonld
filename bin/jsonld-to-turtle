@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+/* -*- mode: Javascript -*-
+
+turtle-to-jsonld
+Copyright 2013 Kuno Woudt <kuno@frob.nl>
+
+turtle-to-jsonld is licensed under copyleft-next version 0.3.0, see
+LICENSE.txt for more information.
+
+*/
+
+var fs = require ('fs');
+var jsonld = require ('jsonld');
+var jsonld_to_turtle = require ('../lib/jsonld-to-turtle');
+
+function help ()
+{
+    console.log ("jsonld-to-turtle");
+    console.log ("Copyright 2014 Kuno Woudt <kuno@frob.nl>");
+    console.log ("License: copyleft-next 0.3.0");
+    console.log ("");
+    console.log ("Usage: jsonld-to-turtle <filename>");
+};
+
+function main (filename)
+{
+    fs.readFile(filename, "utf-8", function (err, data) {
+
+        jsonld_to_turtle.fromJsonld (data, function (err, output) {
+            if (err) {
+                console.error ("ERROR: ", JSON.stringify(err, null, "    "));
+                process.exit(1);
+            } else {
+                console.log(output);
+            }
+        });
+    });
+};
+
+if (process.argv[2] === undefined
+    || process.argv[2] === '--help')
+{
+    help ();
+}
+else
+{
+    main (process.argv[2]);
+}
