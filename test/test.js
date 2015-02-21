@@ -49,11 +49,11 @@ suite ('Parser', function () {
             assert.equal (term.type, 'literal');
             assert.equal (term.value, 'aap');
             assert.equal (term.datatype, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString');
-            assert.equal (term.language, 'fy-NL');
+            assert.equal (term.language, 'fy-nl');
         });
 
         test ('literal with datatype', function () {
-            var term = parser.term ('"aap"^^<https://example.com/noot#mies>');
+            var term = parser.term ('"aap"^^https://example.com/noot#mies');
             assert.equal (term.type, 'literal');
             assert.equal (term.value, 'aap');
             assert.equal (term.datatype, 'https://example.com/noot#mies');

@@ -1,32 +1,32 @@
 {
-    "author": "Kuno Woudt <kuno@frob.nl>",
-    "dependencies": {
-        "n3": "^0.2.5",
-        "jsonld": "^0.2.6"
-    },
-    "devDependencies": {
-        "mocha": "1.12.x",
-        "jshint": "2.3.0"
-    },
-    "description": "Turtle to JSON-LD conversion.",
-    "engines": {
-        "node": ">=0.8"
-    },
-    "main": "lib/turtle-to-jsonld.js",
-    "scripts": {
-        "test": "bin/.test"
-    },
-    "bin": {
-        "turtle-to-jsonld": "./bin/turtle-to-jsonld"
-    },
-    "jshintConfig": {
-        "node": true
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/warpr/turtle-to-jsonld/"
-    },
-    "license": "copyleft-next 0.3.0",
-    "name": "turtle-to-jsonld",
-    "version": "0.0.5"
+  "author": "Kuno Woudt <kuno@frob.nl>",
+  "dependencies": {
+    "jsonld": "^0.3.22",
+    "n3": "^0.4.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.6.0",
+    "mocha": "^2.1.0"
+  },
+  "description": "Turtle to JSON-LD conversion.",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "main": "lib/turtle-to-jsonld.js",
+  "scripts": {
+    "test": "bin/.test"
+  },
+  "bin": {
+    "turtle-to-jsonld": "./bin/turtle-to-jsonld"
+  },
+  "jshintConfig": {
+    "node": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warpr/turtle-to-jsonld/"
+  },
+  "license": "copyleft-next 0.3.0",
+  "name": "turtle-to-jsonld",
+  "version": "0.0.6"
 }
