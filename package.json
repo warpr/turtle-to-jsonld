@@ -3,6 +3,9 @@
   "dependencies": {
     "jsonld": "^0.3.22",
     "n3": "^0.4.1",
+    "named-argv": "^0.3.0",
+    "underscore": "^1.8.1",
+    "underscore.string": "^3.0.3",
     "when": "^3.7.2"
   },
   "devDependencies": {

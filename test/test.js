@@ -167,6 +167,103 @@ suite ('Parser', function () {
                              "\nThis is a multiline comment.\n");
             });
         });
+
+        test ('with context', function () {
+
+            var context = {
+                '@context': {
+                    'foaf': 'http://xmlns.com/foaf/0.1/',
+                    'test': 'https://example.com/ns#',
+                    'author': { '@id': 'foaf:maker' },
+                    'lastName': { '@id': 'foaf:familyName' }
+                }
+            };
+
+            var input = [
+                '@prefix test: <https://example.com/ns#> .',
+                '',
+                'test:titerito <http://xmlns.com/foaf/0.1/maker> test:farruko .',
+                'test:farruko <http://xmlns.com/foaf/0.1/familyName> "Reyes Rosado" .'
+            ].join ("\n");
+
+            return parser.compactFromTurtle (input, context).then (function (result) {
+                assert.deepEqual (result['@context'], {
+                    'foaf': 'http://xmlns.com/foaf/0.1/',
+                    'test': 'https://example.com/ns#',
+                    'author': { '@id': 'foaf:maker' },
+                    'lastName': { '@id': 'foaf:familyName' }
+                });
+
+                var graph = graph_to_hash (result['@graph']);
+
+                assert.deepEqual (graph['test:farruko'], {
+                    '@id': 'test:farruko',
+                    'lastName': 'Reyes Rosado'
+                });
+
+                assert.deepEqual (graph['test:titerito'], {
+                    '@id': 'test:titerito',
+                    'author': { '@id': 'test:farruko' }
+                });
+            });
+
+        });
+
+        test ('with root', function () {
+
+            var context = {
+                '@context': {
+                    'foaf': 'http://xmlns.com/foaf/0.1/',
+                    'test': 'https://example.com/ns#',
+                    'schema': 'http://schema.org/',
+                    'author': { '@id': 'foaf:maker' },
+                    'lastName': { '@id': 'foaf:familyName' },
+                    'schema:url': { '@type': '@id' },
+                    'schema:sameAs': { '@type': '@id' }
+                }
+            };
+
+            var input = [
+                '@prefix test: <https://example.com/ns#> .',
+                '@prefix mbrec: <http://musicbrainz.org/recording/> .',
+                '',
+                'test:titerito <http://xmlns.com/foaf/0.1/maker> test:farruko;',
+                '    <http://schema.org/url> <http://youtu.be/X4lkfFpHw-8>.',
+                '<http://youtu.be/X4lkfFpHw-8> a <http://schema.org/CreativeWork>;',
+                '<http://schema.org/sameAs> mbrec:5016995f-0abc-4193-8a6d-0d16e6669396.',
+                'test:farruko <http://xmlns.com/foaf/0.1/familyName> "Reyes Rosado";',
+                '    <http://schema.org/url> <https://twitter.com/FarrukoPR> .'
+            ].join ("\n");
+
+            var root = "test:titerito";
+
+            return parser.compactFromTurtle (input, context, root).then (function (result) {
+                assert.deepEqual (result['@context'], {
+                    'foaf': 'http://xmlns.com/foaf/0.1/',
+                    'test': 'https://example.com/ns#',
+                    'schema': 'http://schema.org/',
+                    'author': { '@id': 'foaf:maker' },
+                    'lastName': { '@id': 'foaf:familyName' },
+                    'schema:url': { '@type': '@id' },
+                    'schema:sameAs': { '@type': '@id' }
+                });
+
+                assert.deepEqual (result['author'], {
+                    '@id': 'test:farruko',
+                    'lastName': 'Reyes Rosado',
+                    'schema:url': 'https://twitter.com/FarrukoPR'
+                });
+
+                assert.deepEqual (result['schema:url'], {
+                    '@id': 'http://youtu.be/X4lkfFpHw-8',
+                    '@type': 'schema:CreativeWork',
+                    'schema:sameAs':
+                    'http://musicbrainz.org/recording/5016995f-0abc-4193-8a6d-0d16e6669396'
+                });
+            });
+
+        });
+
     });
 
     suite ('JSON-LD to Turtle', function () {
@@ -181,7 +278,7 @@ suite ('Parser', function () {
                 }
             }, null, "    ");
 
-            parser.fromJsonld (input).then (function ( result) {
+            return parser.fromJsonld (input).then (function (result) {
                 var expected = [
                     '@prefix dc: <http://purl.org/dc/terms/>.',
                     '',
