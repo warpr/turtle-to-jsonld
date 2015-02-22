@@ -32,5 +32,5 @@
   },
   "license": "copyleft-next 0.3.0",
   "name": "turtle-to-jsonld",
-  "version": "0.0.6"
+  "version": "0.0.7"
 }
