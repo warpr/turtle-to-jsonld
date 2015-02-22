@@ -6,10 +6,10 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 cd "$DIR/.."
 
-JSHINT="node_modules/jshint/bin/jshint lib/turtle-to-jsonld.js"
+ESLINT="node_modules/.bin/eslint lib"
 MOCHA="node_modules/mocha/bin/mocha --ui tdd --reporter spec"
 
-$JSHINT && $MOCHA
+$ESLINT && $MOCHA
 
 
 

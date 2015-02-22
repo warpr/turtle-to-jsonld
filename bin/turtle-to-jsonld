@@ -19,14 +19,14 @@ function help ()
     console.log ("Copyright 2013 Kuno Woudt <kuno@frob.nl>");
     console.log ("License: copyleft-next 0.3.0");
     console.log ("");
-    console.log ("Usage: turtle-to-jsonld <filename>");
+    console.log ("Usage: turtle-to-jsonld <filename> [context]");
 };
 
-function main (filename)
+function main (filename, context)
 {
     fs.readFile(filename, "utf-8", function (err, data) {
 
-        turtle_to_jsonld.compactFromTurtle (data, function (err, output) {
+        turtle_to_jsonld.compactFromTurtle (data, context, function (err, output) {
             if (err) {
                 console.error ("ERROR: ", err);
                 process.exit(1);
@@ -39,12 +39,17 @@ function main (filename)
     });
 };
 
-if (process.argv[2] === undefined
-    || process.argv[2] === '--help')
+if (process.argv[2] === undefined || process.argv[2] === '--help')
 {
     help ();
 }
 else
 {
-    main (process.argv[2]);
+    context = null;
+    if (process.argv.length > 3) {
+        var buffer = fs.readFileSync(process.argv[3])
+        context = JSON.parse(buffer.toString());
+    }
+
+    main (process.argv[2], context);
 }

@@ -2,10 +2,11 @@
   "author": "Kuno Woudt <kuno@frob.nl>",
   "dependencies": {
     "jsonld": "^0.3.22",
-    "n3": "^0.4.1"
+    "n3": "^0.4.1",
+    "when": "^3.7.2"
   },
   "devDependencies": {
-    "jshint": "^2.6.0",
+    "eslint": "^0.15.0",
     "mocha": "^2.1.0"
   },
   "description": "Turtle to JSON-LD conversion.",
@@ -14,7 +15,7 @@
   },
   "main": "lib/turtle-to-jsonld.js",
   "scripts": {
-    "test": "bin/.test"
+    "test": "bin/test"
   },
   "bin": {
     "turtle-to-jsonld": "./bin/turtle-to-jsonld"

@@ -64,8 +64,7 @@ suite ('Parser', function () {
 
     suite ('Compact from turtle', function () {
 
-        test ('no graph', function (done) {
-
+        test ('no graph', function () {
             var input = [
                 '@prefix dc: <http://purl.org/dc/terms/> .',
                 '',
@@ -81,15 +80,12 @@ suite ('Parser', function () {
                 }
             };
 
-            parser.compactFromTurtle (input, function (err, result) {
-                assert.equal (err, null);
+            return parser.compactFromTurtle (input).then (function (result) {
                 assert.deepEqual (result, expected);
-                done ();
             });
-
         });
 
-        test ('with graph', function (done) {
+        test ('with graph', function () {
 
             var input = [
                 '@prefix foaf: <http://xmlns.com/foaf/0.1/> .',
@@ -99,9 +95,7 @@ suite ('Parser', function () {
                 'test:farruko foaf:familyName "Reyes Rosado" .'
             ].join ("\n");
 
-            parser.compactFromTurtle (input, function (err, result) {
-                assert.equal (err, null);
-
+            return parser.compactFromTurtle (input).then (function (result) {
                 assert.deepEqual (result['@context'], {
                     'foaf': 'http://xmlns.com/foaf/0.1/',
                     'test': 'https://example.com/ns#'
@@ -118,13 +112,11 @@ suite ('Parser', function () {
                     '@id': 'test:titerito',
                     'foaf:maker': { '@id': 'test:farruko' }
                 });
-
-                done ();
             });
 
         });
 
-        test ('native datatypes', function (done) {
+        test ('native datatypes', function () {
 
             var input = [
                 '@prefix ex: <https://example.com/> .',
@@ -137,7 +129,7 @@ suite ('Parser', function () {
                 'ex:prop hydra:writeonly "true"^^xsd:boolean .'
             ].join ("\n");
 
-            parser.compactFromTurtle (input, function (err, result) {
+            parser.compactFromTurtle (input).then (function (result) {
                 assert.equal (err, null);
 
                 var graph = graph_to_hash (result['@graph']);
@@ -155,13 +147,11 @@ suite ('Parser', function () {
                     'hydra:readonly': true,
                     'hydra:writeonly': true,
                 });
-
-                done ();
             });
 
         });
 
-        test ('triple quoted literal', function (done) {
+        test ('triple quoted literal', function () {
 
             var input = [
                 '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .',
@@ -171,23 +161,17 @@ suite ('Parser', function () {
                 '"""@en .'
             ].join ("\n");
 
-            parser.compactFromTurtle (input, function (err, result) {
-                assert.equal (err, null);
-
+            parser.compactFromTurtle (input).then (function (result) {
                 assert.equal (result['rdfs:comment']['@language'], 'en');
                 assert.equal (result['rdfs:comment']['@value'],
                              "\nThis is a multiline comment.\n");
-
-                done ();
             });
-
         });
     });
 
     suite ('JSON-LD to Turtle', function () {
 
-        test ('no graph', function (done) {
-
+        test ('no graph', function () {
             var input = JSON.stringify({
                 "@context": { "dc": "http://purl.org/dc/terms/" },
                 "@id": "https://example.com/titerito",
@@ -197,9 +181,7 @@ suite ('Parser', function () {
                 }
             }, null, "    ");
 
-            parser.fromJsonld (input, function (err, result) {
-                assert.equal (err, null);
-
+            parser.fromJsonld (input).then (function ( result) {
                 var expected = [
                     '@prefix dc: <http://purl.org/dc/terms/>.',
                     '',
@@ -208,8 +190,8 @@ suite ('Parser', function () {
                 ].join ("\n");
 
                 assert.equal (result, expected);
-                done ();
             });
         });
     });
+
 });
