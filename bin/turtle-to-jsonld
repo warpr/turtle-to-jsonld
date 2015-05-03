@@ -4,7 +4,7 @@
 turtle-to-jsonld
 Copyright 2015 Kuno Woudt <kuno@frob.nl>
 
-turtle-to-jsonld is licensed under copyleft-next version 0.3.0, see
+turtle-to-jsonld is licensed under Apache v2, see
 LICENSE.txt for more information.
 
 */
@@ -18,7 +18,7 @@ function help ()
 {
     console.log ("turtle-to-jsonld");
     console.log ("Copyright 2013,2015 Kuno Woudt <kuno@frob.nl>");
-    console.log ("License: copyleft-next 0.3.0");
+    console.log ("License: Apache v2");
     console.log ("");
     console.log ("Usage: turtle-to-jsonld <filename> [options]");
     console.log ("");
