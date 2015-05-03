@@ -11,5 +11,3 @@ MOCHA="node_modules/mocha/bin/mocha --ui tdd --reporter spec"
 
 $ESLINT && $MOCHA
 
-
-
